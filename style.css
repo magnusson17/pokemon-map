@@ -1,0 +1,82 @@
+.general-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+#fumetto {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    background-color: white;
+    width: calc(100% - 40px);
+    /* height: 30%; */
+    padding: 20px;
+    border: 5px solid black;
+    border-radius: 50px;
+    padding: 20px;
+    transition: 200ms;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 2;
+}
+
+#fumetto.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.fumetto__btns-box {
+    position: absolute;
+    right: 0;
+    bottom: calc(100% + 20px);
+    background-color: white;
+    padding: 20px;
+    padding-right: 60px;
+    border: 5px solid black;
+    border-radius: 5px;
+}
+
+.fumetto__btn {
+    display: flex;
+    cursor: pointer;
+}
+
+.fumetto__btn:hover .fumetto__arrow {
+    opacity: 1;
+    cursor: pointer;
+}
+
+.fumetto__arrow {
+    height: 26px;
+    margin-right: 10px;
+    opacity: 0;
+}
+
+/* TEST */
+
+@media (max-width:991px) {
+    .mob-dir {
+        position: absolute;
+        width: 40px;
+        height: 40px;
+        background-color: green;
+        z-index: 1;
+    }
+    .mob-dir--up {
+        top: 30px;
+        right: 30px;
+    }
+    .mob-dir--right {
+        bottom: 30px;
+        right: 30px;
+    }
+    .mob-dir--down {
+        top: 30px;
+        left: 30px;
+    }
+    .mob-dir--left {
+        bottom: 30px;
+        left: 30px;
+    }
+}

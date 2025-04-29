@@ -1,0 +1,11 @@
+@font-face {
+    font-family: PokeFont;
+    src: url('./fonts//PokemonGb-RAeo.ttf') format('truetype');
+}
+
+body {
+    font-family: PokeFont, Arial, sans-serif;
+    line-height: 200%;
+}
+
+/* https://www.fontspace.com/category/pokemon */

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="reset.css">
+    <link rel="stylesheet" href="fonts.css">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div class="general-wrapper">
+
+        <div id="fumetto">
+            <p>Vuoi andare alla pagina ABOUT?</p>
+            <div class="fumetto__btns-box">
+                <div class="fumetto__btn fumetto__btn--yes">
+                    <img class="fumetto__arrow" src="./imgs/arrow-right-comic.svg">
+                    <span>SI</span>
+                </div>
+                <div class="fumetto__btn fumetto__btn--no">
+                    <img class="fumetto__arrow" src="./imgs/arrow-right-comic.svg">
+                    <span>NO</span>
+                </div>
+            </div>
+        </div>
+
+        <div id="mob-dir-up" class="mob-dir mob-dir--up"></div>
+        <div id="mob-dir-right" class="mob-dir mob-dir--right"></div>
+        <div id="mob-dir-down" class="mob-dir mob-dir--down"></div>
+        <div id="mob-dir-left" class="mob-dir mob-dir--left"></div>
+        
+        <canvas></canvas>
+    </div>
+
+    <script src="./data/collision.js"></script>
+    <script src="./data/battle.js"></script>
+    <script src="./data/door.js"></script>
+    <script src="./classes.js"></script>
+    <script src="./index.js"></script>
+
+</body>
+</html>
