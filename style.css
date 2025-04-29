@@ -1,3 +1,9 @@
+:root {
+    --posizione-wrapper-arrow-dir: 30px;
+    --misura-wrapper-arrow-dir: 80px;
+    --misura-arrow-dir: 40px;
+}
+
 .general-wrapper {
     position: relative;
     width: 100%;
@@ -54,6 +60,10 @@
 }
 
 /* TEST */
+img{
+    user-select: none;
+    pointer-events: none;
+}
 .mob-dir {display:none;}
 @media (max-width:991px) {
     .mob-dir {
@@ -61,32 +71,32 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        width: 80px;
-        height: 80px;
+        width: var(--misura-wrapper-arrow-dir);
+        height: var(--misura-wrapper-arrow-dir);
         background-color: rgba(255, 255, 255, 0.5);
         border-radius: 50%;
         z-index: 1;
     }
     .mob-dir--up {
-        top: 30px;
-        right: 30px;
+        bottom: calc(var(--posizione-wrapper-arrow-dir) * 2 + var(--misura-wrapper-arrow-dir));
+        right: var(--posizione-wrapper-arrow-dir);
     }
     .mob-dir--right {
-        bottom: 30px;
-        right: 30px;
+        bottom: var(--posizione-wrapper-arrow-dir);
+        right: var(--posizione-wrapper-arrow-dir);
     }
     .mob-dir--down {
-        top: 30px;
-        left: 30px;
+        bottom: calc(var(--posizione-wrapper-arrow-dir) * 2 + var(--misura-wrapper-arrow-dir));
+        left: var(--posizione-wrapper-arrow-dir);
     }
     .mob-dir--left {
-        bottom: 30px;
-        left: 30px;
+        bottom: var(--posizione-wrapper-arrow-dir);
+        left: var(--posizione-wrapper-arrow-dir);
     }
 
     .mob-dir__arrow {
-        width: 40px;
-        height: 40px;
+        width: var(--misura-arrow-dir);
+        height: var(--misura-arrow-dir);
     }
 
     .mob-dir--up .mob-dir__arrow { transform: rotate(270deg);}

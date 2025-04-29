@@ -9,6 +9,7 @@ canvas.width = window.innerWidth
 canvas.height = window.innerHeight
 
 window.addEventListener('resize', () => {
+    // RICARICO LA PAG????
     canvas.width = window.innerWidth
     canvas.height = window.innerHeight
 })
