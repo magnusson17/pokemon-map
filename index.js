@@ -185,6 +185,30 @@ function animate() {
     })
     player.draw()
     dietro.draw()
+
+    // TEST
+    /*
+    window.requestAnimationFrame(animate)
+
+    c.save()
+
+    const zoom = 0.6
+    const centerX = canvas.width / 2
+    const centerY = canvas.height / 2
+
+    c.translate(centerX, centerY)
+    c.scale(zoom, zoom)
+    c.translate(-centerX, -centerY)
+    
+    bg.draw()
+    boundaries.forEach((boundary) => boundary.draw())
+    battleAreas.forEach((battle) => battle.draw())
+    doorAreas.forEach((door) => door.draw())
+    player.draw()
+    dietro.draw()
+
+    c.restore()
+    */
     
     let isMoving = true
     player.moving = false
