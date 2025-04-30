@@ -8,13 +8,17 @@ const btnNO = document.querySelector('#fumetto .fumetto__btn--no')
 canvas.width = window.innerWidth
 canvas.height = window.innerHeight
 
-window.addEventListener('resize', () => {
-    // RICARICO LA PAG????
-    canvas.width = window.innerWidth
-    canvas.height = window.innerHeight
-})
 
 const movSpeed = 10
+const isMobile = window.innerWidth <= 991
+let resizeTimeout
+
+window.addEventListener('resize', () => {
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(() => {
+        location.reload();
+    }, 300);
+})
 
 /* voglio looppare nel array collision per andare a trovare dove ho i miei collision square
 looppo ogni 70 perchè so che la mappa è larga 70 (l'ho deciso prima su Tiled) 
@@ -172,34 +176,31 @@ btnNO.addEventListener('click', () => {
 })
 
 function animate() {
-    window.requestAnimationFrame(animate)
-    bg.draw()
-    boundaries.forEach((boundary) => {
-        boundary.draw()
-    })
-    battleAreas.forEach((battle) => {
-        battle.draw()
-    })
-    doorAreas.forEach((door) => {
-        door.draw()
-    })
-    player.draw()
-    dietro.draw()
-
+    
     // TEST
     /*
     window.requestAnimationFrame(animate)
+    bg.draw()
+    boundaries.forEach((boundary) => {boundary.draw()})
+    battleAreas.forEach((battle) => {battle.draw()})
+    doorAreas.forEach((door) => {door.draw()})
+    player.draw()
+    dietro.draw()
+    */
+   window.requestAnimationFrame(animate)
 
-    c.save()
-
-    const zoom = 0.6
-    const centerX = canvas.width / 2
-    const centerY = canvas.height / 2
-
-    c.translate(centerX, centerY)
-    c.scale(zoom, zoom)
-    c.translate(-centerX, -centerY)
-    
+    if (isMobile) {
+        c.save()
+     
+        const zoom = 0.6
+        const centerX = canvas.width / 2
+        const centerY = canvas.height / 2
+     
+        c.translate(centerX, centerY)
+        c.scale(zoom, zoom)
+        c.translate(-centerX, -centerY)
+    }
+   
     bg.draw()
     boundaries.forEach((boundary) => boundary.draw())
     battleAreas.forEach((battle) => battle.draw())
@@ -208,7 +209,6 @@ function animate() {
     dietro.draw()
 
     c.restore()
-    */
     
     let isMoving = true
     player.moving = false
