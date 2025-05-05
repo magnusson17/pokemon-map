@@ -9,7 +9,7 @@ canvas.width = window.innerWidth
 canvas.height = window.innerHeight
 
 
-const movSpeed = 10
+const movSpeed = 8
 const isMobile = window.innerWidth <= 991
 let resizeTimeout
 
@@ -44,7 +44,7 @@ const doorAreas = []
 
 // faccio caricare il canva centrato sempre rispetto a un punto (cosi che il player non cadrà per sbaglio su una collision al caricamento)
 const TILE_SIZE = 48
-const START_TILE = { col: 36, row: 20 }
+const START_TILE = { col: 35, row: 21 }
 
 const offset = {
     x: -START_TILE.col * TILE_SIZE + canvas.width / 2 - TILE_SIZE / 2,
@@ -54,7 +54,7 @@ const offset = {
 
 collisionsMap.forEach((row, i) => {
     row.forEach((el, j) => {
-        if (el === 1025) {
+        if (el === 2103) {
             boundaries.push(new Boundary({
                 position: {
                     x: j * Boundary.w + offset.x,
@@ -93,12 +93,10 @@ doorMap.forEach((row, i) => {
 
 // istanzio le imgs
 const img = new Image()
-img.src = './imgs/Pellet Town sign.png'
-// img.src = './imgs/Pokemon map scaled.png'
+img.src = './imgs/new-pellet-town.png'
 
 const dietroImg = new Image()
-dietroImg.src = './imgs/passaDietro2.png'
-// dietroImg.src = './imgs/passaDietro.png'
+dietroImg.src = './imgs/front-els-new-pellet-town.png'
 
 const playerUpImg = new Image()
 playerUpImg.src = './imgs/playerUp.png'
@@ -176,23 +174,13 @@ btnNO.addEventListener('click', () => {
 })
 
 function animate() {
-    
-    // TEST
-    /*
+
     window.requestAnimationFrame(animate)
-    bg.draw()
-    boundaries.forEach((boundary) => {boundary.draw()})
-    battleAreas.forEach((battle) => {battle.draw()})
-    doorAreas.forEach((door) => {door.draw()})
-    player.draw()
-    dietro.draw()
-    */
-   window.requestAnimationFrame(animate)
 
     if (isMobile) {
         c.save()
      
-        const zoom = 0.6
+        const zoom = 0.7
         const centerX = canvas.width / 2
         const centerY = canvas.height / 2
      
@@ -260,6 +248,7 @@ function animate() {
         }
     }
 
+    // movimento
     if (keys.w.pressed && lastKey === 'ArrowUp') {
         player.moving = true
         player.img = player.sprites.up

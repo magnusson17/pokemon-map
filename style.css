@@ -4,6 +4,9 @@
     --misura-arrow-dir: 40px;
 }
 
+body {user-select: none;}
+img {pointer-events: none;}
+
 .general-wrapper {
     position: relative;
     width: 100%;
@@ -60,10 +63,6 @@
 }
 
 /* TEST */
-img{
-    user-select: none;
-    pointer-events: none;
-}
 .mob-dir {display:none;}
 @media (max-width:991px) {
     .mob-dir {
