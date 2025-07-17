@@ -1,20 +1,25 @@
-const express = require('express');
-const path = require('path');
-const app = express();
-const PORT = 3000;
+const express = require('express')
+const path = require('path')
+const serverless = require('serverless-http')
 
-app.use(express.static(path.join(__dirname, '..', 'public')));
+const app = express()
+app.use(express.static(path.join(__dirname, '..', 'public')))
 
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, '..', 'public', 'index.html'));
-});
+    res.sendFile(path.join(__dirname, '..', 'public', 'index.html'))
+})
 
 app.get('/home', (req, res) => {
-    res.sendFile(path.join(__dirname, '..', 'public', 'home.html'));
-});
+    res.sendFile(path.join(__dirname, '..', 'public', 'home.html'))
+})
 
-app.listen(PORT, () => {
-    console.log(`Server running at http://localhost:${PORT}`);
-});
+// Export per Vercel
+module.exports.handler = serverless(app)
 
-module.exports.handler = serverless(app);
+// Run locale solo se lanciato direttamente
+if (require.main === module) {
+    const PORT = process.env.PORT || 3000
+    app.listen(PORT, () => {
+        console.log(`Server running at http://localhost:${PORT}`)
+    })
+}
