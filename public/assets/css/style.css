@@ -46,6 +46,13 @@ img {pointer-events: none;}
     border-radius: 5px;
 }
 
+.fumetto__btns-box * {
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+}
+
 .fumetto__btn {
     display: flex;
     cursor: pointer;

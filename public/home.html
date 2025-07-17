@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/assets/css/reset.css">
+    <link rel="stylesheet" href="/assets/css/fonts.css">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <title>Home</title>
+</head>
+<body>
+    <div class="general-wrapper">
+
+        <div id="fumetto">
+            <p>Vuoi uscire?</p>
+            <div class="fumetto__btns-box">
+                <div class="fumetto__btn fumetto__btn--yes">
+                    <img class="fumetto__arrow" src="/assets/imgs/arrow-right-comic.svg">
+                    <a href="/"><span>SI</span></a>
+                </div>
+                <div class="fumetto__btn fumetto__btn--no">
+                    <img class="fumetto__arrow" src="/assets/imgs/arrow-right-comic.svg">
+                    <span>NO</span>
+                </div>
+            </div>
+        </div>
+
+        <div id="mob-dir-up" class="mob-dir mob-dir--up">
+            <img class="mob-dir__arrow" src="/assets/imgs/arrow-right-comic.svg">
+        </div>
+        <div id="mob-dir-right" class="mob-dir mob-dir--right">
+            <img class="mob-dir__arrow" src="/assets/imgs/arrow-right-comic.svg">
+        </div>
+        <div id="mob-dir-down" class="mob-dir mob-dir--down">
+            <img class="mob-dir__arrow" src="/assets/imgs/arrow-right-comic.svg">
+        </div>
+        <div id="mob-dir-left" class="mob-dir mob-dir--left">
+            <img class="mob-dir__arrow" src="/assets/imgs/arrow-right-comic.svg">
+        </div>
+        
+        <canvas></canvas>
+    </div>
+
+    <script src="/assets/data/collision-interni.js"></script>
+    <script src="/assets/data/door-interna.js"></script>
+    <script src="/assets/js/classes.js"></script>
+    <script src="/assets/js/index.js"></script>
+
+</body>
+</html>

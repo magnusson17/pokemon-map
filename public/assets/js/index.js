@@ -22,28 +22,38 @@ window.addEventListener('resize', () => {
 /* voglio looppare nel array collision per andare a trovare dove ho i miei collision square
 looppo ogni 70 perchè so che la mappa è larga 70 (l'ho deciso prima su Tiled) 
 ora avrò tanti array quante righe ho (40, deciso su Tiled) */
+
 const collisionsMap = []
-for (let i = 0; i < collision.length; i += 70) {
-    collisionsMap.push(collision.slice(i, 70 + i))
-}
-
-const battleMap = []
-for (let i = 0; i < battle.length; i += 70) {
-    battleMap.push(battle.slice(i, 70 + i))
-}
-
 const doorMap = []
-for (let i = 0; i < door.length; i += 70) {
-    doorMap.push(door.slice(i, 70 + i))
+
+if (window.location.pathname === '/') {
+    for (let i = 0; i < collision.length; i += 70) {
+        collisionsMap.push(collision.slice(i, 70 + i))
+    }
+    for (let i = 0; i < door.length; i += 70) {
+        doorMap.push(door.slice(i, 70 + i))
+    }
+} else if (window.location.pathname === '/home') {
+    for (let i = 0; i < collisionInterni.length; i += 70) {
+        collisionsMap.push(collisionInterni.slice(i, 70 + i))
+    }
+    for (let i = 0; i < doorInterna.length; i += 70) {
+        doorMap.push(doorInterna.slice(i, 70 + i))
+    }
 }
 
 const boundaries = []
-const battleAreas = []
 const doorAreas = []
 
 // faccio caricare il canva centrato sempre rispetto a un punto (cosi che il player non cadrà per sbaglio su una collision al caricamento)
 const TILE_SIZE = 48
-const START_TILE = { col: 35, row: 21 }
+let START_TILE = {}
+
+if (window.location.pathname === '/') {
+    START_TILE = { col: 26, row: 20 }
+} else if (window.location.pathname === '/home') {
+    START_TILE = { col: 34, row: 23 }
+}
 
 const offset = {
     x: -START_TILE.col * TILE_SIZE + canvas.width / 2 - TILE_SIZE / 2,
@@ -55,19 +65,6 @@ collisionsMap.forEach((row, i) => {
     row.forEach((el, j) => {
         if (el === 2103) {
             boundaries.push(new Boundary({
-                position: {
-                    x: j * Boundary.w + offset.x,
-                    y: i * Boundary.h + offset.y,
-                }
-            }))
-        }
-    })
-})
-
-battleMap.forEach((row, i) => {
-    row.forEach((el, j) => {
-        if (el === 55) {
-            battleAreas.push(new Boundary({
                 position: {
                     x: j * Boundary.w + offset.x,
                     y: i * Boundary.h + offset.y,
@@ -92,22 +89,26 @@ doorMap.forEach((row, i) => {
 
 // istanzio le imgs
 const img = new Image()
-img.src = './imgs/new-pellet-town.png'
-
 const dietroImg = new Image()
-dietroImg.src = './imgs/front-els-new-pellet-town.png'
+
+if (window.location.pathname === '/') {
+    img.src = '/assets/imgs/new-pellet-town.png'
+    dietroImg.src = '/assets/imgs/front-els-new-pellet-town.png'
+} else if (window.location.pathname === '/home') {
+    img.src = '/assets/imgs/interno.png'
+}
 
 const playerUpImg = new Image()
-playerUpImg.src = './imgs/playerUp.png'
+playerUpImg.src = '/assets/imgs/playerUp.png'
 
 const playerLeftImg = new Image()
-playerLeftImg.src = './imgs/playerLeft.png'
+playerLeftImg.src = '/assets/imgs/playerLeft.png'
 
 const playerDownImg = new Image()
-playerDownImg.src = './imgs/playerDown.png'
+playerDownImg.src = '/assets/imgs/playerDown.png'
 
 const playerRightImg = new Image()
-playerRightImg.src = './imgs/playerRight.png'
+playerRightImg.src = '/assets/imgs/playerRight.png'
 
 const player = new Moving({
     position: {
@@ -152,7 +153,7 @@ const keys = {
 let lastKey = ''
 
 // per muovere contemporaneamente mappa e bariere
-const movables = [bg, ...boundaries, ...battleAreas, ...doorAreas, dietro]
+const movables = [bg, ...boundaries, ...doorAreas, dietro]
 
 function rectangularCollision({ rect1, rect2 }) {
     return (
@@ -190,7 +191,6 @@ function animate() {
    
     bg.draw()
     boundaries.forEach((boundary) => boundary.draw())
-    battleAreas.forEach((battle) => battle.draw())
     doorAreas.forEach((door) => door.draw())
     player.draw()
     dietro.draw()
@@ -203,30 +203,6 @@ function animate() {
 
     if (doorSet.open) return
 
-    // collision con la battle area
-    if (keys.w.pressed || keys.a.pressed || keys.s.pressed || keys.d.pressed) {
-        for (let i = 0; i < battleAreas.length; i++) {
-            const battle = battleAreas[i]
-            const overlappingArea = 
-                (Math.min(player.position.x + player.width, battle.position.x + battle.width) -
-                Math.max(player.position.x, battle.position.x)) *
-                (Math.min(player.position.y + player.height, battle.position.y + battle.height) -
-                Math.max(player.position.y, battle.position.y))
-            if (
-                rectangularCollision({
-                    rect1: player,
-                    rect2: {...battle, position: {
-                        x: battle.position.x,
-                        y: battle.position.y
-                    }}
-                    // per prendere dal busto in giu del player: player.width * player.height / 2
-                }) &&  overlappingArea > (player.width * player.height) / 2
-            ) {
-                console.log("battle")
-            }
-        }
-    }
-
     // collision con door
     if (keys.w.pressed) {
         for (let i = 0; i < doorAreas.length; i++) {
@@ -237,6 +213,23 @@ function animate() {
                     rect2: {...door, position: {
                         x: door.position.x,
                         y: door.position.y + 10
+                    }}
+                })
+            ) {                
+                fumetto.classList.add('active')
+                doorSet.open = true
+                break
+            }
+        }
+    } else if (keys.s.pressed) {
+        for (let i = 0; i < doorAreas.length; i++) {
+            const door = doorAreas[i]
+            if (
+                rectangularCollision({
+                    rect1: player,
+                    rect2: {...door, position: {
+                        x: door.position.x,
+                        y: door.position.y - 20
                     }}
                 })
             ) {                
