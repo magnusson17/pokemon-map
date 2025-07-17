@@ -8,7 +8,6 @@ const btnNO = document.querySelector('#fumetto .fumetto__btn--no')
 canvas.width = window.innerWidth
 canvas.height = window.innerHeight
 
-
 const movSpeed = 8
 const isMobile = window.innerWidth <= 991
 let resizeTimeout
@@ -80,7 +79,7 @@ battleMap.forEach((row, i) => {
 
 doorMap.forEach((row, i) => {
     row.forEach((el, j) => {
-        if (el === 777) {
+        if (el === 2104) {
             doorAreas.push(new Boundary({
                 position: {
                     x: j * Boundary.w + offset.x,
@@ -240,7 +239,7 @@ function animate() {
                         y: door.position.y + 10
                     }}
                 })
-            ) {
+            ) {                
                 fumetto.classList.add('active')
                 doorSet.open = true
                 break
