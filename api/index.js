@@ -7,4 +7,4 @@ app.get('/hello', (req, res) => {
     res.json({ message: 'Hello from Vercel serverless!' });
 });
 
-module.exports.handler = serverless(app);
+module.exports = serverless(app);
