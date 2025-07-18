@@ -95,7 +95,7 @@ if (window.location.pathname === '/') {
     img.src = '/assets/imgs/new-pellet-town.png'
     dietroImg.src = '/assets/imgs/front-els-new-pellet-town.png'
 } else if (window.location.pathname === '/home') {
-    img.src = '/assets/imgs/new-pellet-town.png'
+    img.src = '/assets/imgs/new-casa-interno.png'
 }
 
 const playerUpImg = new Image()
