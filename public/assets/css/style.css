@@ -1,6 +1,6 @@
 :root {
     --posizione-wrapper-arrow-dir: 30px;
-    --misura-wrapper-arrow-dir: 80px;
+    --misura-wrapper-arrow-dir: 60px;
     --misura-arrow-dir: 40px;
 }
 
@@ -37,7 +37,7 @@ img {pointer-events: none;}
 
 .fumetto__btns-box {
     position: absolute;
-    right: 0;
+    left: 0;
     bottom: calc(100% + 20px);
     background-color: white;
     padding: 20px;
@@ -69,9 +69,17 @@ img {pointer-events: none;}
     opacity: 0;
 }
 
-/* TEST */
-.mob-dir {display:none;}
+/* frecce di movimento */
+.wrapper-mob-dir {display:none;}
 @media (max-width:991px) {
+    .wrapper-mob-dir {
+        display: block;
+        position: absolute;
+        right: var(--posizione-wrapper-arrow-dir);
+        bottom: var(--posizione-wrapper-arrow-dir);
+        width: calc(var(--misura-wrapper-arrow-dir) * 3);
+        height: calc(var(--misura-wrapper-arrow-dir) * 3);
+    }
     .mob-dir {
         position: absolute;
         display: flex;
@@ -84,20 +92,24 @@ img {pointer-events: none;}
         z-index: 1;
     }
     .mob-dir--up {
-        bottom: calc(var(--posizione-wrapper-arrow-dir) * 2 + var(--misura-wrapper-arrow-dir));
-        right: var(--posizione-wrapper-arrow-dir);
-    }
-    .mob-dir--right {
-        bottom: var(--posizione-wrapper-arrow-dir);
-        right: var(--posizione-wrapper-arrow-dir);
+        top: 0;
+        left: 50%;
+        transform: translate3d(-50%,0,0);
     }
     .mob-dir--down {
-        bottom: calc(var(--posizione-wrapper-arrow-dir) * 2 + var(--misura-wrapper-arrow-dir));
-        left: var(--posizione-wrapper-arrow-dir);
+        bottom: 0;
+        left: 50%;
+        transform: translate3d(-50%,0,0);
+    }
+    .mob-dir--right {
+        top: 50%;
+        right: 0;
+        transform: translate3d(0,-50%,0);
     }
     .mob-dir--left {
-        bottom: var(--posizione-wrapper-arrow-dir);
-        left: var(--posizione-wrapper-arrow-dir);
+        top: 50%;
+        left: 0;
+        transform: translate3d(0,-50%,0);
     }
 
     .mob-dir__arrow {
