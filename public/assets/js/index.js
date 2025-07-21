@@ -372,7 +372,7 @@ window.addEventListener('keyup', (e) => {
     }
 })
 
-// TEST
+// direzioni
 const setDirection = (key, isPressed) => {
     switch (key) {
         case 'ArrowUp': keys.w.pressed = isPressed; lastKey = 'ArrowUp'; break;
