@@ -13,7 +13,7 @@ img {pointer-events: none;}
     height: 100%;
 }
 
-#fumetto {
+.fumetto {
     position: absolute;
     bottom: 20px;
     left: 20px;
@@ -30,7 +30,7 @@ img {pointer-events: none;}
     z-index: 2;
 }
 
-#fumetto.active {
+.fumetto.active {
     opacity: 1;
     pointer-events: all;
 }

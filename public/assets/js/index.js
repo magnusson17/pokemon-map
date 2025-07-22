@@ -2,8 +2,8 @@ const canvas = document.querySelector('canvas')
 // racchiudo in var le proprietà di canvas
 const c = canvas.getContext('2d')
 
-const fumetto = document.getElementById('fumetto')
-const btnNO = document.querySelector('#fumetto .fumetto__btn--no')
+const fumetti = document.querySelectorAll('.fumetto')
+const btnsNo = document.querySelectorAll('.fumetto .fumetto__btn--no')
 
 canvas.width = window.innerWidth
 canvas.height = window.innerHeight
@@ -40,19 +40,34 @@ if (window.location.pathname === '/') {
     for (let i = 0; i < doorInterna.length; i += 70) {
         doorMap.push(doorInterna.slice(i, 70 + i))
     }
+} else if (window.location.pathname === '/lighthouse') {
+    for (let i = 0; i < collisionLighthouse.length; i += 70) {
+        collisionsMap.push(collisionLighthouse.slice(i, 70 + i))
+    }
+    for (let i = 0; i < doorLighthouse.length; i += 70) {
+        doorMap.push(doorLighthouse.slice(i, 70 + i))
+    }
 }
 
+// istanzio gli array che isoleranno gli specifici quadretti di contatto
 const boundaries = []
 const doorAreas = []
+const doorLighthouseAreas = []
 
 // faccio caricare il canva centrato sempre rispetto a un punto (cosi che il player non cadrà per sbaglio su una collision al caricamento)
 const TILE_SIZE = 48
 let START_TILE = {}
 
-if (window.location.pathname === '/') {
+if (document.referrer.includes('/home')) {
     START_TILE = { col: 26, row: 20 }
+} else if (document.referrer.includes('/lighthouse')) {
+    START_TILE = { col: 45, row: 12 }
 } else if (window.location.pathname === '/home') {
     START_TILE = { col: 34, row: 23 }
+} else if (window.location.pathname === '/lighthouse') {
+    START_TILE = { col: 35, row: 23 }
+} else if (window.location.pathname === '/') {
+    START_TILE = { col: 36, row: 21 }
 }
 
 const offset = {
@@ -61,6 +76,7 @@ const offset = {
 }
 // *********************** //
 
+// identifico i quadretti di contatto
 collisionsMap.forEach((row, i) => {
     row.forEach((el, j) => {
         if (el === 2103) {
@@ -83,6 +99,13 @@ doorMap.forEach((row, i) => {
                     y: i * Boundary.h + offset.y,
                 }
             }))
+        } else if (el === 2107) {
+            doorLighthouseAreas.push(new Boundary({
+                position: {
+                    x: j * Boundary.w + offset.x,
+                    y: i * Boundary.h + offset.y,
+                }
+            }))
         }
     })
 })
@@ -97,6 +120,9 @@ if (window.location.pathname === '/') {
 } else if (window.location.pathname === '/home') {
     img.src = '/assets/imgs/new-casa-interno.png'
     dietroImg.src = '/assets/imgs/passaDietroInterno.png'
+} else if (window.location.pathname === '/lighthouse') {
+    img.src = '/assets/imgs/new-lighthouse-interno.png'
+    dietroImg.src = '/assets/imgs/retroInternoLighthouse.png'
 }
 
 const playerUpImg = new Image()
@@ -154,7 +180,7 @@ const keys = {
 let lastKey = ''
 
 // per muovere contemporaneamente mappa e bariere
-const movables = [bg, ...boundaries, ...doorAreas, dietro]
+const movables = [bg, ...boundaries, ...doorAreas, ...doorLighthouseAreas, dietro]
 
 function rectangularCollision({ rect1, rect2 }) {
     return (
@@ -165,13 +191,19 @@ function rectangularCollision({ rect1, rect2 }) {
     )
 }
 
-const doorSet = {
-    open: false
-}
+// creo una sentinella quando busso alla porta, se è true faccio return (quindi non posso camminare con il fumetto aperto)
+const doorSet = { isKnocking: false }
 
-btnNO.addEventListener('click', () => {
-    fumetto.classList.remove('active')
-    doorSet.open = false
+btnsNo.forEach((btn, index) => {
+    btn.addEventListener('click', () => {
+        console.log("click")
+        fumetti.forEach((fumetto, index) => {
+            if (fumetto.classList.contains('active')) {
+                fumetto.classList.remove('active')
+            }
+        })
+        doorSet.isKnocking = false
+    })
 })
 
 function animate() {
@@ -193,6 +225,7 @@ function animate() {
     bg.draw()
     boundaries.forEach((boundary) => boundary.draw())
     doorAreas.forEach((door) => door.draw())
+    doorLighthouseAreas.forEach((door) => door.draw())
     player.draw()
     dietro.draw()
 
@@ -201,11 +234,10 @@ function animate() {
     let isMoving = true
     player.moving = false
 
+    if (doorSet.isKnocking) return
 
-    if (doorSet.open) return
-
-    // collision con door
     if (keys.w.pressed) {
+        // collision con door "home"
         for (let i = 0; i < doorAreas.length; i++) {
             const door = doorAreas[i]
             if (
@@ -216,13 +248,39 @@ function animate() {
                         y: door.position.y + 10
                     }}
                 })
+            ) {
+                fumetti.forEach((fumetto, index) => {
+                    if (fumetto.dataset.fumetto === "home") {
+                        fumetto.classList.add('active')
+                    }
+                })     
+                doorSet.isKnocking = true
+                break
+            }
+        }
+        // collision con door "lighthouse"
+        for (let i = 0; i < doorLighthouseAreas.length; i++) {
+            const door = doorLighthouseAreas[i]
+            if (
+                rectangularCollision({
+                    rect1: player,
+                    rect2: {...door, position: {
+                        x: door.position.x,
+                        y: door.position.y + 10
+                    }}
+                })
             ) {                
-                fumetto.classList.add('active')
-                doorSet.open = true
+                fumetti.forEach((fumetto, index) => {
+                    if (fumetto.dataset.fumetto === "lighthouse") {
+                        fumetto.classList.add('active')
+                    }
+                })
+                doorSet.isKnocking = true
                 break
             }
         }
     } else if (keys.s.pressed) {
+        // collision con door "home" per uscire
         for (let i = 0; i < doorAreas.length; i++) {
             const door = doorAreas[i]
             if (
@@ -234,8 +292,10 @@ function animate() {
                     }}
                 })
             ) {                
-                fumetto.classList.add('active')
-                doorSet.open = true
+                fumetti.forEach((fumetto, index) => {
+                    fumetto.classList.add('active')
+                })
+                doorSet.isKnocking = true
                 break
             }
         }

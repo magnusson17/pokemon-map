@@ -14,6 +14,10 @@ app.get('/home', (req, res) => {
     res.sendFile(path.join(__dirname, 'public/home.html'))
 })
 
+app.get('/lighthouse', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public/lighthouse.html'))
+})
+
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`)
 })
