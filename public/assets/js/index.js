@@ -58,14 +58,14 @@ const doorLighthouseAreas = []
 const TILE_SIZE = 48
 let START_TILE = {}
 
-if (document.referrer.includes('/home')) {
-    START_TILE = { col: 26, row: 20 }
-} else if (document.referrer.includes('/lighthouse')) {
-    START_TILE = { col: 45, row: 12 }
-} else if (window.location.pathname === '/home') {
+if (window.location.pathname === '/home') {
     START_TILE = { col: 34, row: 23 }
 } else if (window.location.pathname === '/lighthouse') {
     START_TILE = { col: 35, row: 23 }
+} else if (document.referrer.includes('/home')) {
+    START_TILE = { col: 26, row: 20 }
+} else if (document.referrer.includes('/lighthouse')) {
+    START_TILE = { col: 45, row: 12 }
 } else if (window.location.pathname === '/') {
     START_TILE = { col: 36, row: 21 }
 }
