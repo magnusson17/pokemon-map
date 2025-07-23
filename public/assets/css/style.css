@@ -4,7 +4,10 @@
     --misura-arrow-dir: 40px;
 }
 
-body {user-select: none;}
+body {
+    user-select: none;
+    touch-action: manipulation;
+}
 img {pointer-events: none;}
 
 .general-wrapper {
