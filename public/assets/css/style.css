@@ -10,6 +10,9 @@ body {
 }
 img {pointer-events: none;}
 
+.page-index {background-color: #66E0CB;}
+.page-interno {background-color: #000000;}
+
 .general-wrapper {
     position: relative;
     width: 100%;
@@ -85,7 +88,7 @@ img {pointer-events: none;}
     background-color: #000000;
     opacity: 0;
     pointer-events: none;
-    transition: 400ms;
+    transition: 300ms;
     z-index: 3;
 }
 .black-bg-cover.active {
