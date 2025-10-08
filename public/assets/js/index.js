@@ -8,6 +8,7 @@ const btnsNo = document.querySelectorAll('.fumetto .fumetto__btn--no')
 canvas.width = window.innerWidth
 canvas.height = window.innerHeight
 
+// movSpeed è la velocità con la quale i "movables" si spostano
 const movSpeed = 8
 const isMobile = window.innerWidth <= 991
 let resizeTimeout
@@ -321,6 +322,7 @@ function animate() {
             }
         }
         if (isMoving)
+            // sposto tutti gli elementi della mappa (a eccezione del personaggio)
             movables.forEach((move) => {
                 move.position.y += movSpeed
             })
